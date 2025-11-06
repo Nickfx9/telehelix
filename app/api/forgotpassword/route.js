@@ -16,64 +16,60 @@ export async function POST(req) {
       );
     }
 
-    // Always act the same, even if email is not found
+    // Check if user exists
     const user = await db.collection("users").findOne({ email });
-
-    if (user) {
-      // Only send email if the user exists
-      const resetToken = crypto.randomBytes(32).toString("hex");
-      const resetTokenExpiry = Date.now() + 1000 * 60 * 15; // 15 minutes
-
-      await db.collection("users").updateOne(
-        { email },
-        {
-          $set: {
-            resetPasswordToken: resetToken,
-            resetPasswordExpiry: resetTokenExpiry,
-          },
-        }
-      );
-
-      // ✅ Use correct base URL for both local and production
-      const baseUrl =
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
-      // Updated link to point to /password-update
-     const resetUrl = `${baseUrl}/update-password?token=${resetToken}`;
-
-
-      // ✅ Setup Nodemailer transporter (Gmail)
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
+    if (!user) {
+      // Return same response for security (don’t reveal if user exists)
+      return NextResponse.json({
+        message: "If this email is registered, a verification code has been sent.",
       });
-
-      // ✅ Compose email
-      const mailOptions = {
-        from: `"AfyaConnect" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: "🔑 Reset Your AfyaConnect Password",
-        html: `
-          <p>Hello ${user.fullName || "User"},</p>
-          <p>You requested a password reset for your AfyaConnect account.</p>
-          <p>Click the link below to reset your password (valid for 15 minutes):</p>
-          <p><a href="${resetUrl}">${resetUrl}</a></p>
-          <br/>
-          <p>If you didn’t request this, please ignore this email.</p>
-        `,
-      };
-
-      // ✅ Send Email
-      await transporter.sendMail(mailOptions);
     }
 
-    // Always return the same response
+    // ✅ Generate 6-digit numeric code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiry = Date.now() + 1000 * 60 * 10; // 10 minutes
+
+    // ✅ Save the code and expiry in the database
+    await db.collection("users").updateOne(
+      { email },
+      {
+        $set: {
+          resetCode: verificationCode,
+          resetCodeExpiry: expiry,
+        },
+      }
+    );
+
+    // ✅ Setup Nodemailer (Gmail)
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // ✅ Compose email
+    const mailOptions = {
+      from: `"AfyaConnect" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "🔐 AfyaConnect Password Reset Code",
+      html: `
+        <p>Hello ${user.fullName || "User"},</p>
+        <p>You requested to reset your AfyaConnect password.</p>
+        <p>Here is your verification code (valid for 10 minutes):</p>
+        <h2 style="letter-spacing: 3px; color: #007bff;">${verificationCode}</h2>
+        <p>Enter this code on the password reset page to continue.</p>
+        <br/>
+        <p>If you didn’t request this, please ignore this email.</p>
+      `,
+    };
+
+    // ✅ Send Email
+    await transporter.sendMail(mailOptions);
+
     return NextResponse.json({
-      message:
-        "If this email is registered, a password reset link has been sent.",
+      message: "If this email is registered, a verification code has been sent.",
     });
   } catch (err) {
     console.error("Forgot Password Error:", err);

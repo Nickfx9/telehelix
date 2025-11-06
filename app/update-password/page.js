@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -7,8 +6,7 @@ import { motion } from "framer-motion";
 function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
-
+  const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
@@ -17,21 +15,25 @@ function ResetPasswordContent() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  // ✅ Get token from localStorage or URL query (fallback)
   useEffect(() => {
-    if (!token) {
+    const savedToken =
+      localStorage.getItem("resetToken") || searchParams.get("token");
+    if (!savedToken) {
       setMessage({
         type: "error",
-        text: "Invalid or missing reset link. Please request again.",
+        text: "No verification record found. Please start over.",
       });
+    } else {
+      setToken(savedToken);
     }
-  }, [token]);
+  }, [searchParams]);
 
   function evaluateStrength(value) {
     let level = "";
     let color = "";
     const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     const mediumRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-
     if (strongRegex.test(value)) {
       level = "Strong";
       color = "bg-green-500";
@@ -41,11 +43,7 @@ function ResetPasswordContent() {
     } else if (value.length > 0) {
       level = "Weak";
       color = "bg-red-500";
-    } else {
-      level = "";
-      color = "";
     }
-
     setStrength({ level, color });
   }
 
@@ -56,11 +54,16 @@ function ResetPasswordContent() {
     if (password !== confirmPassword) {
       return setMessage({ type: "error", text: "Passwords do not match." });
     }
-
     if (strength.level !== "Strong") {
       return setMessage({
         type: "error",
         text: "Password must be strong (8+ chars, upper/lowercase, number, symbol).",
+      });
+    }
+    if (!token) {
+      return setMessage({
+        type: "error",
+        text: "Session expired. Please restart password reset.",
       });
     }
 
@@ -73,14 +76,15 @@ function ResetPasswordContent() {
       });
 
       const data = await res.json();
-
       if (res.ok) {
         setMessage({
           type: "success",
-          text: "Password reset successful! You can now go back to login.",
+          text: "✅ Password reset successful! You can now log in.",
         });
+        localStorage.removeItem("resetToken");
         setPassword("");
         setConfirmPassword("");
+        setTimeout(() => router.push("/login"), 2000);
       } else {
         setMessage({
           type: "error",
@@ -209,20 +213,6 @@ function ResetPasswordContent() {
             }`}
           >
             <p className="mb-2">{message.text}</p>
-
-            {message.type === "success" && (
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 20px rgba(0,255,255,0.6)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => router.push("/login")}
-                className="mt-3 px-6 py-2 rounded-lg bg-cyan-600/80 hover:bg-cyan-500/90 text-white font-medium shadow-[0_0_10px_rgba(0,255,255,0.4)] transition-all"
-              >
-                Go Back to Login
-              </motion.button>
-            )}
           </motion.div>
         )}
       </motion.div>
@@ -244,6 +234,4 @@ export default function ResetPassword() {
   );
 }
 
-// ✅ Important for Vercel App Router (prevents 404)
 export const dynamic = "force-dynamic";
-// force rebuild

@@ -1,56 +1,75 @@
-// app/api/resetpassword/route.js     
+// app/api/resetpassword/route.js
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import nodemailer from "nodemailer"; // ✅ add this import
+import nodemailer from "nodemailer";
 import {
   findUserByResetToken,
   clearResetPasswordToken,
   updateUserById,
 } from "@/models/User";
 
+/**
+ * POST /api/resetpassword
+ * Body: { token, password }
+ *
+ * This route:
+ *  - validates the token (via findUserByResetToken)
+ *  - hashes & updates the user's password
+ *  - clears the reset token/expiry fields
+ *  - sends a non-blocking confirmation email (if email settings present)
+ */
 export async function POST(req) {
   try {
     const { token, password } = await req.json();
 
     if (!token || !password) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return NextResponse.json({ error: "Missing token or password." }, { status: 400 });
     }
 
-    // 1️⃣ Find user by reset token (helper checks expiry)
+    // 1) Find user by reset token (helper checks expiry)
     const user = await findUserByResetToken(token);
     if (!user) {
-      return NextResponse.json(
-        { error: "Invalid or expired token" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid or expired reset token." }, { status: 400 });
     }
 
-    // 2️⃣ Hash new password
+    // 2) Hash new password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 3️⃣ Update user password
+    // 3) Update user password (use your existing helper)
     await updateUserById(user._id, { password: hashedPassword });
 
-    // 4️⃣ Clear reset token
+    // 4) Clear reset token & expiry
     await clearResetPasswordToken(user._id);
 
-    // 5️⃣ Send confirmation email (NEW)
-    await sendPasswordResetSuccessEmail(user.email, user.name);
+    // 5) Send confirmation email (non-blocking)
+    // Only attempt if environment has mail credentials; errors are caught and logged.
+    sendPasswordResetSuccessEmail(user.email, user.name).catch((err) => {
+      console.error("Non-blocking: failed to send password reset confirmation email:", err);
+    });
 
-    // 6️⃣ Respond success
-    return NextResponse.json({ message: "Password reset successful" });
+    // 6) Respond
+    return NextResponse.json({ message: "Password reset successful. You may now log in." });
   } catch (err) {
     console.error("Reset Password Error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
 
-// ✅ Helper: send confirmation email
+/**
+ * sendPasswordResetSuccessEmail
+ * Non-blocking: errors are caught by caller.
+ */
 async function sendPasswordResetSuccessEmail(email, name = "") {
+  // Do not throw here; caller handles errors. This function attempts to send an email only if config exists.
   try {
-    // ✅ Updated: use Gmail credentials from your .env
+    // If developer did not set EMAIL_USER/EMAIL_PASS/EMAIL_FROM, skip sending silently.
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS || !process.env.EMAIL_FROM) {
+      console.log("Skipping password reset confirmation email: mail env vars not configured.");
+      return;
+    }
+
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: "gmail", // you can change to another SMTP provider if desired
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -84,8 +103,9 @@ async function sendPasswordResetSuccessEmail(email, name = "") {
       html,
     });
 
-    console.log(`✅ Confirmation email sent to ${email}`);
+    console.log(`Password change confirmation email sent to ${email}`);
   } catch (error) {
-    console.error("❌ Error sending success email:", error);
+    // propagate error to caller (but caller logs and ignores it)
+    throw error;
   }
 }
