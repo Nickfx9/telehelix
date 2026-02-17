@@ -13,9 +13,8 @@ import CareSection from "@/components/CareSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import WaitlistModal from "@/components/WaitlistModal";
 
-// Assets
-import therapy1 from "/public/images/therapy1.jpg";
-import therapy2 from "/public/images/therapy2.jpg";
+// NOTE: We no longer 'import' images here to avoid Vercel build errors.
+// Next.js automatically finds them in the /public folder via string paths.
 
 const aiFeatures = [
   {
@@ -42,7 +41,14 @@ const Section = ({ imageSrc, imageAlt, title, description, sectionClasses, textC
         initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
         className="rounded-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/20"
       >
-        <Image src={imageSrc} alt={imageAlt} width={600} height={400} className="object-cover w-full h-[450px]" priority={imagePriority} />
+        <Image 
+          src={imageSrc} 
+          alt={imageAlt} 
+          width={600} 
+          height={400} 
+          className="object-cover w-full h-[450px]" 
+          priority={imagePriority} 
+        />
       </motion.div>
       <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} className={`space-y-8 ${textColorClasses}`}>
         <h2 className="text-4xl md:text-5xl font-black leading-tight tracking-tight">{title}</h2>
@@ -124,9 +130,9 @@ const TherapyPage = () => {
         </div>
       </section>
 
-      {/* 3. CORE CONTENT SECTIONS (High-Contrast for Readability) */}
+      {/* 3. CORE CONTENT SECTIONS - Updated with direct image paths */}
       <Section
-        imageSrc={therapy1}
+        imageSrc="/images/therapy1.jpg"
         imageAlt="Personalized therapy"
         title="Personalized Therapy for You"
         description={[
@@ -139,7 +145,7 @@ const TherapyPage = () => {
       />
 
       <Section
-        imageSrc={therapy2}
+        imageSrc="/images/therapy2.jpg"
         imageAlt="Community support"
         title="Group Circles & Community"
         description={[
