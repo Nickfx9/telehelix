@@ -5,76 +5,94 @@ import Navbar from "../components/Navbar";
 import Services from "../components/Services";
 import WhyChooseUs from "../components/WhyChooseUs";
 import HowItWorks from "../components/HowItWorks";
+import LocalCareBridge from "../components/LocalCareBridge";
 import FAQs from "../components/FAQs";
 import Footer from "../components/Footer";
 
-// Import the new reusable modals
-import RegistrationCard from "../components/RegistrationCard";
-import LoginCard from "../components/LoginCard";
+// Import the new handshake modal
+import WaitlistModal from "../components/WaitlistModal";
 
 export default function Home() {
-  const [showRegister, setShowRegister] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+  // Single state to control the waitlist across the whole page
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   return (
     <>
-      <Navbar />
-      <main className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/images/doctor-hero.jpg"
-            alt="Doctor video call with patient"
-            className="object-cover w-full h-full"
-          />
-          <div className="absolute inset-0 bg-blue-900 opacity-30"></div>
-        </div>
+      {/* Pass the trigger to Navbar */}
+      <Navbar onOpenWaitlist={() => setIsWaitlistOpen(true)} />
 
-        {/* Translucent dots */}
-        <div className="absolute w-72 h-72 bg-white opacity-20 rounded-full top-32 left-10 blur-3xl z-1"></div>
-        <div className="absolute w-96 h-96 bg-white opacity-15 rounded-full bottom-20 right-20 blur-3xl z-1"></div>
+      <main className="relative min-h-screen bg-[#0a192f] flex items-center pt-20 overflow-hidden">
+        {/* Modern Background Effects */}
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] z-0"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-teal-500/10 rounded-full blur-[100px] z-0"></div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-            Welcome to AfyaConnect
-          </h1>
-          <p className="text-lg md:text-xl max-w-xl mx-auto mb-6 drop-shadow-md">
-            Seamless online healthcare consultations with licensed doctors at your convenience.
-          </p>
-          <div className="space-x-4">
-            <button
-              onClick={() => setShowRegister(true)}
-              className="mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition drop-shadow"
-            >
-              Get Started
-            </button>
-            <button
-              onClick={() => setShowLogin(true)}
-              className="mt-6 px-6 py-3 bg-yellow-400 text-white rounded-lg hover:bg-yellow-500 transition drop-shadow"
-            >
-              Login
-            </button>
+        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
+          
+          {/* LEFT SIDE: Text & Action */}
+          <div className="text-left">
+            <div className="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-teal-400 uppercase bg-teal-400/10 rounded-full border border-teal-400/20">
+              Coming Soon 
+            </div>
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+              The Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Healthcare</span> is Here.
+            </h1>
+            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
+              Skip the hospital queues. Consult with board-certified doctors via TeleHelix—the most secure telemedicine platform in East Africa.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => setIsWaitlistOpen(true)} // Connected to Waitlist
+                className="px-8 py-4 bg-teal-500 text-white font-bold rounded-xl hover:bg-teal-400 transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(20,184,166,0.4)]"
+              >
+                Join the Waitlist
+              </button>
+              <button
+                className="px-8 py-4 bg-white/5 text-white border border-white/10 rounded-xl hover:bg-white/10 transition-all backdrop-blur-md"
+              >
+                Watch Demo
+              </button>
+            </div>
+            
+            <p className="mt-6 text-sm text-gray-400 italic">
+              * Be among the first 500 users to get free delivery on your first order.
+            </p>
+          </div>
+
+          {/* RIGHT SIDE: The 3D Mockup */}
+          <div className="relative flex justify-center items-center">
+            <div className="absolute inset-0 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
+            <img
+              src="/images/telehelix-3d-mockup.png" 
+              alt="TeleHelix App 3D Mockup"
+              className="relative z-10 w-full max-w-[450px] drop-shadow-2xl animate-float"
+            />
           </div>
         </div>
-
-        {/* Render new modals */}
-        {showRegister && <RegistrationCard onClose={() => setShowRegister(false)} />}
-        {showLogin && <LoginCard onClose={() => setShowLogin(false)} />}
       </main>
 
-      {/* Our Services Section */}
       <section id="services">
-        <Services />
+        {/* Added onOpenAI to trigger the waitlist modal */}
+        <Services onOpenAI={() => setIsWaitlistOpen(true)} />
       </section>
 
       <WhyChooseUs />
       <HowItWorks />
+      
+      {/* Pass the trigger to LocalCareBridge */}
+      <LocalCareBridge onOpenWaitlist={() => setIsWaitlistOpen(true)} />
+      
       <FAQs />
 
       <section id="contact">
         <Footer />
       </section>
+
+      {/* Global Waitlist Handshake Modal */}
+      <WaitlistModal 
+        isOpen={isWaitlistOpen} 
+        onClose={() => setIsWaitlistOpen(false)} 
+      />
     </>
   );
 }

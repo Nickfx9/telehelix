@@ -15,7 +15,7 @@ const AboutUsSection = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-bold text-cyan-400"
           >
-            About AfyaConnect
+            About Telehelix
           </motion.h2>
 
           <motion.p

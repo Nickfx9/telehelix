@@ -1,5 +1,6 @@
+"use client";
 import { useState } from "react";
-import { MessageCircle, Facebook, Twitter, Instagram } from "lucide-react";
+import { MessageCircle, Facebook, Twitter, Instagram, X, Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
   const [activeCard, setActiveCard] = useState(null);
@@ -8,149 +9,116 @@ export default function Footer() {
     setActiveCard(activeCard === card ? null : card);
   };
 
-  const termsContent = `
-    **Terms of Service**  
-    Welcome to AfyaConnect, a telemedicine platform connecting Kenyans to licensed healthcare providers. By using our services, you agree to:  
-    - **Eligibility**: You must be 18+ or have guardian consent to use AfyaConnect.  
-    - **Payments**: Payments via M-Pesa are non-refundable unless specified. Ensure accurate payment details.  
-    - **Usage**: Use the platform for lawful healthcare purposes only. Do not share account credentials.  
-    - **Liability**: AfyaConnect is not liable for medical outcomes; consult doctors for advice.  
-    - **Termination**: We may suspend accounts for misuse or violation of terms.  
-    Last updated: July 18, 2025. Contact support@afyaconnect.co.ke for queries.
-  `;
+  const termsContent = (
+    <div className="space-y-4">
+      <h3 className="text-xl font-black text-white">Terms of Service</h3>
+      <p className="text-sm text-slate-300 leading-relaxed">
+        Welcome to **TeleHelix**, a telemedicine platform connecting Kenyans to licensed healthcare providers. By using our services, you agree to:
+      </p>
+      <ul className="text-sm text-slate-300 space-y-2 list-disc pl-4">
+        <li><strong>Eligibility</strong>: You must be 18+ or have guardian consent.</li>
+        <li><strong>Payments</strong>: Payments via M-Pesa are non-refundable unless specified.</li>
+        <li><strong>Liability</strong>: TeleHelix connects you to experts but is not liable for medical outcomes.</li>
+      </ul>
+      <p className="text-[10px] text-slate-500 uppercase font-bold pt-4">Last updated: Feb 17, 2026</p>
+    </div>
+  );
 
-  const privacyContent = `
-    **Privacy Policy**  
-    AfyaConnect respects your privacy under Kenya’s Data Protection Act 2019.  
-    - **Data Collection**: We collect personal and health data (e.g., name, phone, medical history) for consultations.  
-    - **Usage**: Data is used to provide services, schedule appointments, and improve our platform.  
-    - **Protection**: We use secure encryption for data storage and transmission.  
-    - **Sharing**: Data is shared only with licensed doctors or as required by law.  
-    - **Rights**: You can request access or deletion of your data via support@afyaconnect.co.ke.  
-    Last updated: July 18, 2025.
-  `;
-
-  const blogsContent = `
-    **Health Tips from AfyaConnect**  
-    - **Managing Malaria in Rural Kenya**: Learn prevention tips like using mosquito nets and timely consultations via AfyaConnect.  
-    - **Benefits of Telemedicine**: Access doctors from anywhere, even on 2G networks, saving time and costs.  
-    - **Nutrition for Kids**: Simple diet tips for Kenyan families to boost child health.  
-    Visit our blog for more health insights!
-  `;
+  const privacyContent = (
+    <div className="space-y-4">
+      <h3 className="text-xl font-black text-white">Privacy Policy</h3>
+      <p className="text-sm text-slate-300 leading-relaxed">
+        TeleHelix respects your privacy under **Kenya’s Data Protection Act 2019**.
+      </p>
+      <ul className="text-sm text-slate-300 space-y-2 list-disc pl-4">
+        <li><strong>Collection</strong>: We secure health data (medical history) for consultations.</li>
+        <li><strong>Protection</strong>: We use 256-bit encryption for all data storage.</li>
+        <li><strong>Rights</strong>: You can request data deletion at any time.</li>
+      </ul>
+    </div>
+  );
 
   return (
-    <footer className="relative w-full py-10 px-4 bg-[repeating-linear-gradient(45deg,#000000_0,#000000_8px,transparent_8px,transparent_16px)] text-gray-300">
-      {/* Navy Blue Overlay */}
-      <div className="absolute inset-0 bg-[rgba(10,39,68,0.85)]"></div>
-
-      {/* Green Card for Terms/Privacy/Blogs */}
+    <footer className="relative w-full py-16 px-6 bg-slate-950 text-slate-400 border-t border-white/5">
+      
+      {/* MODAL OVERLAY */}
       {activeCard && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-20 px-4">
-          <div className="bg-green-500 text-white rounded-xl p-6 max-w-lg w-full relative max-h-[80vh] overflow-auto">
-            <button
-              onClick={() => setActiveCard(null)}
-              className="absolute top-2 right-2 text-white hover:text-blue-200"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-[100] px-4">
+          <div className="bg-slate-900 border border-white/10 text-white rounded-[2rem] p-8 max-w-lg w-full relative shadow-2xl">
+            <button onClick={() => setActiveCard(null)} className="absolute top-6 right-6 text-slate-400 hover:text-white transition-colors">
+              <X size={24} />
             </button>
-            <div className="prose prose-sm text-white">
-              {activeCard === "terms" && <div>{termsContent}</div>}
-              {activeCard === "privacy" && <div>{privacyContent}</div>}
-              {activeCard === "blogs" && <div>{blogsContent}</div>}
-            </div>
+            {activeCard === "terms" && termsContent}
+            {activeCard === "privacy" && privacyContent}
+            {activeCard === "blogs" && (
+                <div className="space-y-4">
+                    <h3 className="text-xl font-black text-white">TeleHelix Insights</h3>
+                    <p className="text-sm text-slate-300 italic">"Accessing quality healthcare shouldn't be a luxury. Our mission is to bridge the gap using technology."</p>
+                </div>
+            )}
           </div>
         </div>
       )}
 
-      <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
-        {/* Brand Section */}
-        <div>
-          <h2 className="text-xl font-bold text-white mb-2 flex items-center">
-            AfyaConnect
-            <span className="flex gap-1 ml-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-            </span>
-          </h2>
-          <p className="text-gray-400 text-sm">Connecting you to quality healthcare, anytime.</p>
-        </div>
-
-        {/* Our Company Links */}
-        <div>
-          <h3 className="text-base font-semibold text-white mb-2 flex items-center">
-            Our Company
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 ml-2"></span>
-          </h3>
-          <ul className="space-y-1 text-sm">
-            <li><a href="#about" className="hover:text-blue-400 transition">About Us</a></li>
-            <li><a href="#careers" className="hover:text-blue-400 transition">Careers</a></li>
-            <li><a href="#contact" className="hover:text-blue-400 transition">Contact Us</a></li>
-            <li><a href="#languages" className="hover:text-blue-400 transition">Swahili/English</a></li>
-          </ul>
-        </div>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
         
-        {/* How It Works Links */}
+        {/* Brand Section */}
+        <div className="col-span-1 md:col-span-1">
+          <div className="flex items-center gap-2 mb-4 group cursor-pointer">
+            <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 7c1.5-1.5 3-2 4.5-2s3 1.5 4.5 3 3 2 4.5 2 3-.5 4.5-2" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M4.5 17c1.5 1.5 3 2 4.5 2s3-1.5 4.5-3 3-2 4.5-2 3 .5 4.5 2" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
+            </svg>
+            <h2 className="text-2xl font-black text-white tracking-tighter">
+              Tele<span className="text-orange-500">Helix</span>
+            </h2>
+          </div>
+          <p className="text-slate-500 text-sm leading-relaxed">
+            Bridging the healthcare gap in Kenya through AI-powered consultations and local clinic integrations.
+          </p>
+        </div>
+
+        {/* Links Columns */}
         <div>
-          <h3 className="text-base font-semibold text-white mb-2 flex items-center">
-            How It Works
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 ml-2"></span>
-          </h3>
-          <ul className="space-y-1 text-sm">
-            <li><a href="#how-it-works" className="hover:text-blue-400 transition">Book a Consultation</a></li>
-            <li><a href="#how-it-works" className="hover:text-blue-400 transition">Virtual Consult</a></li>
-            <li><a href="#how-it-works" className="hover:text-blue-400 transition">Get Prescriptions</a></li>
+          <h3 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Company</h3>
+          <ul className="space-y-3 text-sm">
+            <li><a href="#about" className="hover:text-emerald-400 transition-colors">About Our Mission</a></li>
+            <li><a href="#contact" className="hover:text-emerald-400 transition-colors">Contact Support</a></li>
+            <li><button onClick={() => toggleCard("blogs")} className="hover:text-emerald-400 transition-colors">Health Blogs</button></li>
           </ul>
         </div>
 
-        {/* Resources Links */}
         <div>
-          <h3 className="text-base font-semibold text-white mb-2 flex items-center">
-            Resources
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 ml-2"></span>
-          </h3>
-          <ul className="space-y-1 text-sm">
-            <li><button onClick={() => toggleCard("terms")} className="hover:text-blue-400 transition">Terms of Service</button></li>
-            <li><button onClick={() => toggleCard("privacy")} className="hover:text-blue-400 transition">Privacy Policy</button></li>
-            <li><button onClick={() => toggleCard("blogs")} className="hover:text-blue-400 transition">Blogs</button></li>
+          <h3 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Legal</h3>
+          <ul className="space-y-3 text-sm">
+            <li><button onClick={() => toggleCard("terms")} className="hover:text-emerald-400 transition-colors">Terms of Service</button></li>
+            <li><button onClick={() => toggleCard("privacy")} className="hover:text-emerald-400 transition-colors">Privacy Policy</button></li>
           </ul>
         </div>
 
-        {/* Contact Us */}
         <div>
-          <h3 className="text-base font-semibold text-white mb-2 flex items-center">
-            Contact Us
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 ml-2"></span>
-          </h3>
-          <ul className="space-y-1 text-sm">
-            <li><a href="tel:+254700123456" className="hover:text-blue-400 transition">+254 746000720</a></li>
-            <li><a href="mailto:support@afyaconnect.co.ke" className="hover:text-blue-400 transition">support@afyaconnect.co.ke</a></li>
-            <li><a href="#m-pesa" className="hover:text-blue-400 transition">visit us today</a></li>
+          <h3 className="text-white font-bold text-xs uppercase tracking-widest mb-6">HQ</h3>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Nairobi, Kenya</li>
+            <li className="flex items-center gap-2"><Mail size={14} className="text-orange-500"/> hello@telehelix.co.ke</li>
+            <li className="flex items-center gap-2"><Phone size={14} className="text-orange-500"/> +254 746 000 720</li>
           </ul>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="border-t border-gray-500/30 mt-8 pt-4 relative z-10">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm gap-4">
-          {/* Social Icons */}
-          <div className="flex space-x-4">
-            <a href="#" className="hover:text-blue-400 transition"><MessageCircle size={18} /></a>
-            <a href="#" className="hover:text-blue-400 transition"><Facebook size={18} /></a>
-            <a href="#" className="hover:text-blue-400 transition"><Twitter size={18} /></a>
-            <a href="#" className="hover:text-blue-400 transition"><Instagram size={18} /></a>
-          </div>
-          {/* CTA Button */}
-          <a
-            href="#signup"
-            className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            Get Started
-          </a>
-          {/* Copyright */}
-          <p className="text-gray-400">© 2025 AfyaConnect. All rights reserved.</p>
+      <div className="border-t border-white/5 mt-16 pt-8 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[10px] font-bold tracking-widest uppercase gap-6">
+        <p className="text-slate-600">© 2026 TELEHELIX TECHNOLOGIES. ALL RIGHTS RESERVED.</p>
+        
+        <div className="flex space-x-6">
+          <a href="#" className="hover:text-emerald-400 transition-colors"><Twitter size={16} /></a>
+          <a href="#" className="hover:text-emerald-400 transition-colors"><Facebook size={16} /></a>
+          <a href="#" className="hover:text-emerald-400 transition-colors"><Instagram size={16} /></a>
         </div>
+
+        <a href="#signup" className="bg-orange-500 hover:bg-white hover:text-orange-600 transition-all text-white px-6 py-2 rounded-full shadow-lg shadow-orange-500/20">
+          Get Early Access
+        </a>
       </div>
     </footer>
   );

@@ -2,89 +2,114 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaCheckCircle, FaStethoscope, FaLock, FaClock } from "react-icons/fa";
+import { FaStethoscope, FaClock, FaShieldAlt, FaArrowRight } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export default function WhyChooseUs() {
   return (
-    <section className="w-full bg-gradient-to-r from-blue-900 to-blue-700 relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section className="relative w-full py-24 bg-[#0f172a] overflow-hidden">
+      {/* Central Radial Glow - Creates depth without heavy images */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] -z-10"></div>
+
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
         
-        {/* Left Side - Image */}
-        <div className="relative rounded-2xl overflow-hidden backdrop-blur-md bg-white/10 p-6 shadow-xl border border-white/20">
-          <Image
-            src="/images/why-choose-us.jpg"
-            alt="Doctor consulting patient via telemedicine"
-            width={600}
-            height={400}
-            className="rounded-xl object-cover w-full h-auto aspect-[3/2]"
-            priority
-          />
-        </div>
+        {/* Left Side - The 3D Human-Tech Visual */}
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="relative order-2 lg:order-1"
+        >
+          <div className="absolute -inset-2 bg-gradient-to-tr from-blue-500/10 to-teal-500/10 blur-xl rounded-3xl"></div>
+          <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md p-2 shadow-2xl">
+            <Image
+              src="/images/telehelix-trust-mockup.png"
+              alt="TeleHelix Secure Medical Connection"
+              width={600}
+              height={500}
+              className="rounded-2xl object-cover w-full h-auto"
+              loading="lazy" // Better for 3G performance
+            />
+            {/* Overlay Stats Card */}
+            <div className="absolute bottom-6 left-6 right-6 bg-[#1e293b]/90 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex justify-around text-center shadow-lg">
+              <div>
+                <p className="text-xl font-bold text-white">500+</p>
+                <p className="text-[10px] uppercase tracking-wider text-teal-400 font-bold">Doctors</p>
+              </div>
+              <div className="w-px h-8 bg-white/10"></div>
+              <div>
+                <p className="text-xl font-bold text-white">99.9%</p>
+                <p className="text-[10px] uppercase tracking-wider text-teal-400 font-bold">Secure</p>
+              </div>
+              <div className="w-px h-8 bg-white/10"></div>
+              <div>
+                <p className="text-xl font-bold text-white">24/7</p>
+                <p className="text-[10px] uppercase tracking-wider text-teal-400 font-bold">Active</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Right Side - Content */}
-        <div className="text-white space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
-            Why AfyaConnect is Your Trusted Healthcare Partner
-          </h2>
-          <p className="text-lg max-w-lg">
-            Join 10,000+ patients who access expert care in minutes, from anywhere, with AfyaConnect’s secure and affordable platform.
-          </p>
+        <div className="order-1 lg:order-2 space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-teal-400 font-bold tracking-widest text-[10px] lg:text-xs uppercase bg-teal-400/10 px-3 py-1 rounded-full border border-teal-400/20">
+              Trusted Healthcare Ecosystem
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 leading-tight">
+              Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">TeleHelix</span> is the Best Choice
+            </h2>
+          </motion.div>
 
-          <ul className="space-y-4">
-            <li className="flex items-start bg-white/10 p-5 rounded-xl backdrop-blur-sm hover:scale-[1.02] transition-transform duration-200">
-              <FaStethoscope className="text-blue-300 mr-3 mt-1" aria-hidden="true" />
-              <div>
-                <strong className="font-semibold">Licensed Doctors</strong>
-                <p>Consult board-certified professionals for personalized care.</p>
-              </div>
-            </li>
-            <li className="flex items-start bg-white/10 p-5 rounded-xl backdrop-blur-sm hover:scale-[1.02] transition-transform duration-200">
-              <FaCheckCircle className="text-blue-300 mr-3 mt-1" aria-hidden="true" />
-              <div>
-                <strong className="font-semibold">Accessible & Affordable</strong>
-                <p>Quality care that fits your schedule and budget.</p>
-              </div>
-            </li>
-            <li className="flex items-start bg-white/10 p-5 rounded-xl backdrop-blur-sm hover:scale-[1.02] transition-transform duration-200">
-              <FaLock className="text-blue-300 mr-3 mt-1" aria-hidden="true" />
-              <div>
-                <strong className="font-semibold">Secure & Private</strong>
-                <p>HIPAA-compliant encryption keeps your data safe.</p>
-              </div>
-            </li>
-            <li className="flex items-start bg-white/10 p-5 rounded-xl backdrop-blur-sm hover:scale-[1.02] transition-transform duration-200">
-              <FaClock className="text-blue-300 mr-3 mt-1" aria-hidden="true" />
-              <div>
-                <strong className="font-semibold">24/7 Health Support</strong>
-                <p>Instant prescriptions and support, anytime you need it.</p>
-              </div>
-            </li>
-          </ul>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Vetted Experts Card */}
+            <div className="bg-white/5 border border-white/5 p-5 rounded-2xl hover:border-blue-500/30 transition-all duration-300 group">
+              <FaStethoscope className="text-blue-400 text-xl mb-3" />
+              <h4 className="text-white font-bold mb-1 text-base">Vetted Experts</h4>
+              <p className="text-gray-400 text-xs leading-relaxed">Consult board-certified professionals verified by our medical board.</p>
+            </div>
 
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-            <Link href="/dashboard" passHref>
-              <button
-                className="px-8 py-3 bg-white text-blue-900 font-semibold rounded-full hover:bg-blue-100 hover:shadow-lg transition-all duration-200"
-                aria-label="Start your telemedicine consultation"
-              >
-                Start Your Consultation
-              </button>
-            </Link>
+            {/* AI Privacy Card */}
+            <div className="bg-white/5 border border-white/5 p-5 rounded-2xl hover:border-teal-500/30 transition-all duration-300">
+              <FaShieldAlt className="text-teal-400 text-xl mb-3" />
+              <h4 className="text-white font-bold mb-1 text-base">HelixAI Privacy</h4>
+              <p className="text-gray-400 text-xs leading-relaxed">Encrypted health records that ensure your data remains strictly yours.</p>
+            </div>
 
-            <Link href="/therapy" passHref>
-              <button
-                className="px-8 py-3 bg-transparent border border-white text-white font-semibold rounded-full hover:bg-white/20 transition-all duration-200"
-                aria-label="Learn more about AfyaConnect"
-              >
-                Learn More
+            {/* Zero Waiting Card */}
+            <div className="bg-white/5 border border-white/5 p-5 rounded-2xl hover:border-blue-500/30 transition-all duration-300">
+              <FaClock className="text-blue-400 text-xl mb-3" />
+              <h4 className="text-white font-bold mb-1 text-base">Zero Waiting</h4>
+              <p className="text-gray-400 text-xs leading-relaxed">Intelligent queue matching puts you with a doctor in under 5 minutes.</p>
+            </div>
+
+            {/* M-Pesa Security Card */}
+            <div className="bg-white/5 border border-white/5 p-5 rounded-2xl hover:border-teal-500/30 transition-all duration-300">
+              <div className="flex gap-2 mb-3">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                <span className="text-[10px] text-gray-400 uppercase font-bold tracking-tighter">Live Payments</span>
+              </div>
+              <h4 className="text-white font-bold mb-1 text-base">Accessible & Affordable</h4>
+              <p className="text-gray-400 text-xs leading-relaxed">Quality care that fits your schedule and budget..</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <button className="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-500/20 active:scale-95">
+              PATNERSHIP && COLLABORATION
+            </button>
+            <Link href="/therapy">
+              <button className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-white border border-white/10 rounded-xl hover:bg-white/10 transition-all group">
+                Explore More <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
           </div>
         </div>
       </div>
-
-      {/* Subtle grid overlay */}
-      <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-5 pointer-events-none"></div>
     </section>
   );
 }
