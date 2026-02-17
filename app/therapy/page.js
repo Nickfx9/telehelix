@@ -13,8 +13,8 @@ import CareSection from "@/components/CareSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import WaitlistModal from "@/components/WaitlistModal";
 
-// NOTE: We no longer 'import' images here to avoid Vercel build errors.
-// Next.js automatically finds them in the /public folder via string paths.
+// DO NOT IMPORT IMAGES MANUALLY HERE. 
+// We will use string paths directly in the components below.
 
 const aiFeatures = [
   {
@@ -63,12 +63,11 @@ const TherapyPage = () => {
 
   return (
     <main className="flex flex-col min-h-screen relative bg-sky-50 text-slate-900">
-      {/* 1. FIXED FAST NAV (Improved Visibility) */}
       <div className="fixed top-6 left-6 z-[100]">
         <Link href="/" prefetch={true}>
           <motion.button 
             whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-2 bg-white/80 backdrop-blur-xl text-slate-900 px-6 py-3 rounded-2xl border border-blue-100 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:border-blue-400 transition-all"
+            className="flex items-center space-x-2 bg-white/80 backdrop-blur-xl text-slate-900 px-6 py-3 rounded-2xl border border-blue-100 shadow-xl hover:border-blue-400 transition-all"
           >
             <FaArrowLeft size={14} className="text-blue-500" />
             <span className="text-xs font-black uppercase tracking-widest">Back to Home</span>
@@ -76,9 +75,7 @@ const TherapyPage = () => {
         </Link>
       </div>
 
-      {/* 2. HELIX AI HERO (Luminous Ocean Design) */}
       <section className="pt-32 pb-24 px-6 relative overflow-hidden bg-gradient-to-b from-blue-100/50 to-sky-50">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cyan-200/30 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <span className="inline-block text-blue-600 font-bold text-[11px] uppercase tracking-[0.3em] bg-blue-50 px-4 py-2 rounded-full border border-blue-100">
@@ -103,34 +100,26 @@ const TherapyPage = () => {
             </div>
           </div>
 
-          {/* Technical Protocol Card (Glassmorphism) */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-10 bg-white/70 backdrop-blur-3xl border border-white rounded-[3.5rem] shadow-[0_30px_60px_rgba(0,123,255,0.08)]">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-10 bg-white/70 backdrop-blur-3xl border border-white rounded-[3.5rem] shadow-2xl">
             <div className="flex items-center gap-4 mb-8">
-              <div className="p-3 bg-blue-500 rounded-2xl shadow-lg shadow-blue-200">
+              <div className="p-3 bg-blue-500 rounded-2xl">
                 <Sparkles className="text-white" size={24} />
               </div>
               <h4 className="text-sm font-black uppercase tracking-widest text-slate-800">Matching Protocol</h4>
             </div>
             <div className="space-y-4">
               {["Secure NLP Mapping", "Local Outbreak Sync", "Doctor-Ready Handoff"].map((t, i) => (
-                <div key={i} className="flex items-center gap-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-100 group hover:bg-blue-50 transition-colors">
+                <div key={i} className="flex items-center gap-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-100">
                   <CheckCircle2 size={18} className="text-blue-500" />
                   <span className="text-sm font-bold text-slate-700">{t}</span>
                 </div>
               ))}
-              <div className="mt-8 p-5 bg-slate-900 rounded-[2rem] flex items-center justify-between shadow-xl">
-                <div>
-                  <span className="text-[10px] font-black text-blue-400 uppercase block mb-1">Privacy Grade</span>
-                  <span className="text-xs font-bold text-white">Full Encryption Active</span>
-                </div>
-                <ShieldCheck size={24} className="text-blue-400" />
-              </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* 3. CORE CONTENT SECTIONS - Updated with direct image paths */}
+      {/* USE STRING PATHS STARTING WITH / ONLY */}
       <Section
         imageSrc="/images/therapy1.jpg"
         imageAlt="Personalized therapy"
@@ -162,13 +151,12 @@ const TherapyPage = () => {
         <TestimonialsSection />
       </div>
 
-      {/* FOOTER CALL TO ACTION (Clean & Bold) */}
       <section className="py-24 bg-gradient-to-b from-sky-50 to-white text-center">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-black mb-8 text-slate-900">Your journey to wellness starts today.</h2>
           <button 
             onClick={() => setIsWaitlistOpen(true)}
-            className="px-12 py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-slate-900 transition-all shadow-2xl shadow-blue-200 text-lg"
+            className="px-12 py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-slate-900 transition-all shadow-2xl text-lg"
           >
             RESERVE YOUR EARLY ACCESS
           </button>

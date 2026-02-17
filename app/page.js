@@ -45,7 +45,7 @@ export default function Home() {
                 onClick={() => setIsWaitlistOpen(true)} // Connected to Waitlist
                 className="px-8 py-4 bg-teal-500 text-white font-bold rounded-xl hover:bg-teal-400 transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(20,184,166,0.4)]"
               >
-                Join the Waitlist
+                Start your journey today
               </button>
               <button
                 className="px-8 py-4 bg-white/5 text-white border border-white/10 rounded-xl hover:bg-white/10 transition-all backdrop-blur-md"
@@ -55,7 +55,7 @@ export default function Home() {
             </div>
             
             <p className="mt-6 text-sm text-gray-400 italic">
-              * Be among the first 500 users to get free delivery on your first order.
+              * Your healing journey  start today ,Be Among the first users to explore the New Era of digital care 
             </p>
           </div>
 

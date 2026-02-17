@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import tabletImage from "/public/images/tablet-image.jpg"; // Your image here
+
+// WE REMOVED: import tabletImage from "/public/images/tablet-image.jpg"; 
+// This was causing the "Module not found" error on Vercel.
 
 const CareSection = () => {
   return (
@@ -26,7 +28,7 @@ const CareSection = () => {
           {/* Image Placeholder */}
           <div className="w-full h-64 relative mt-4 rounded-xl overflow-hidden border border-white/10">
             <Image
-              src={tabletImage}
+              src="/images/tablet-image.jpg" // FIXED: Using direct string path
               alt="Tablet Health Visual"
               fill
               className="object-cover"
@@ -34,40 +36,36 @@ const CareSection = () => {
           </div>
         </motion.div>
 
-      
-
-
         {/* RIGHT: Mobile Card */}
-<motion.div
-  className="bg-gradient-to-br from-teal-300 via-blue-500 to-blue-800 rounded-[2rem] shadow-2xl p-6 md:p-8 w-full max-w-[280px] h-[480px] mx-auto flex flex-col justify-between text-white"
-  initial={{ opacity: 0, x: 40 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.6 }}
->
-  <div className="space-y-4">
-    {/* Multicolored Gradient Heading */}
-    <h3 className="text-xl font-bold bg-gradient-to-r from-green-300 via-fuchsia-500 to-blue-900 text-transparent bg-clip-text">
-      Your Health, Anywhere
-    </h3>
+        <motion.div
+          className="bg-gradient-to-br from-teal-300 via-blue-500 to-blue-800 rounded-[2rem] shadow-2xl p-6 md:p-8 w-full max-w-[280px] h-[480px] mx-auto flex flex-col justify-between text-white"
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="space-y-4">
+            {/* Multicolored Gradient Heading */}
+            <h3 className="text-xl font-bold bg-gradient-to-r from-green-300 via-fuchsia-500 to-blue-900 text-transparent bg-clip-text">
+              Your Health, Anywhere
+            </h3>
 
-    <p className="text-sm text-white/90">
-      First and only Patient Safety Organization for virtual care.
-    </p>
+            <p className="text-sm text-white/90">
+              First and only Patient Safety Organization for virtual care.
+            </p>
 
-    <p className="text-sm text-white/80">
-      Our commitment to unmatched quality and compassionate care ensures that your well-being is never compromised.
-      Fully accessible on all mobile devices — because your health should go wherever life takes you.
-    </p>
+            <p className="text-sm text-white/80">
+              Our commitment to unmatched quality and compassionate care ensures that your well-being is never compromised.
+              Fully accessible on all mobile devices — because your health should go wherever life takes you.
+            </p>
 
-    <p className="text-sm text-white/80">
-      Whether it’s a late-night consultation or routine checkup, our platform ensures you receive the care you need — when and where you need it most.
-    </p>
-  </div>
+            <p className="text-sm text-white/80">
+              Whether it’s a late-night consultation or routine checkup, our platform ensures you receive the care you need — when and where you need it most.
+            </p>
+          </div>
 
-  <p className="text-xs text-cyan-100 italic text-center mt-4">
-    *Accessible on all mobile devices
-  </p>
-
+          <p className="text-xs text-cyan-100 italic text-center mt-4">
+            *Accessible on all mobile devices
+          </p>
         </motion.div>
       </div>
     </section>
