@@ -55,11 +55,11 @@ const CareSection = () => {
 
             <p className="text-sm text-white/80">
               Our commitment to unmatched quality and compassionate care ensures that your well-being is never compromised.
-              Fully accessible on all mobile devices — because your health should go wherever life takes you.
+              Fully accessible on all mobile devices because your health should go wherever life takes you.
             </p>
 
             <p className="text-sm text-white/80">
-              Whether it’s a late-night consultation or routine checkup, our platform ensures you receive the care you need — when and where you need it most.
+              Whether it’s a late-night consultation or routine checkup, our platform ensures you receive the care you need  when and where you need it most.
             </p>
           </div>
 

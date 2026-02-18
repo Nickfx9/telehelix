@@ -24,8 +24,8 @@ const AboutUsSection = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="text-lg md:text-xl text-gray-300 leading-relaxed"
           >
-            AfyaConnect is a transformative digital health platform connecting
-            communities across Kenya with global telemedicine partners,
+            Telehelix is a transformative digital health platform connecting
+            communities across Kenya with global telehealth partners,
             unlocking quality healthcare access through technology. Whether
             it&apos;s remote consultations, health tracking, or community health
 worker support, we&apos;re here to bring healthcare closer to everyone.
@@ -41,7 +41,7 @@ worker support, we&apos;re here to bring healthcare closer to everyone.
             <div className="bg-white/10 p-6 rounded-xl border border-cyan-500 shadow-lg hover:scale-105 transition transform duration-300">
               <h3 className="text-xl font-semibold text-cyan-300 mb-2">Remote Care</h3>
               <p className="text-gray-300 text-sm">
-                We partner with leading telemedicine providers to offer virtual
+                We partner with leading telehealth providers to offer virtual
                 consultations — anytime, anywhere.
               </p>
             </div>
@@ -55,7 +55,7 @@ worker support, we&apos;re here to bring healthcare closer to everyone.
             <div className="bg-white/10 p-6 rounded-xl border border-cyan-500 shadow-lg hover:scale-105 transition transform duration-300">
               <h3 className="text-xl font-semibold text-cyan-300 mb-2">Connected Villages</h3>
               <p className="text-gray-300 text-sm">
-                From rural homes to county clinics, AfyaConnect ensures seamless
+                From rural homes to county clinics, TeleHelix ensures seamless
                 digital health delivery and follow-up care.
               </p>
             </div>
@@ -82,7 +82,7 @@ worker support, we&apos;re here to bring healthcare closer to everyone.
             className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
             We believe health is a universal right. Our mission is to ensure
-            that no matter where you live — city, village, or remote location —
+            that no matter where you live — city, village, or remote location 
             you have access to the care and tools you need to thrive.
           </motion.p>
         </div>

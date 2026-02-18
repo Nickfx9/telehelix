@@ -33,7 +33,7 @@ export default function WhyChooseUs() {
             {/* Overlay Stats Card */}
             <div className="absolute bottom-6 left-6 right-6 bg-[#1e293b]/90 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex justify-around text-center shadow-lg">
               <div>
-                <p className="text-xl font-bold text-white">500+</p>
+                <p className="text-xl font-bold text-white">50+</p>
                 <p className="text-[10px] uppercase tracking-wider text-teal-400 font-bold">Doctors</p>
               </div>
               <div className="w-px h-8 bg-white/10"></div>

@@ -36,9 +36,10 @@ export default function Home() {
             <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
               The Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Healthcare</span> is Here.
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
-              Skip the hospital queues. Consult with board-certified doctors via TeleHelix—the most secure telemedicine platform in East Africa.
-            </p>
+            <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed">
+    Stop waiting. <span className="text-emerald-400 font-bold">Start healing.</span> 
+    Connect with Kenya's top specialists in under 5 minutes. No queues, no traffic just world-class care via <span className="text-white font-semibold">TeleHelix.</span>
+   </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <button
