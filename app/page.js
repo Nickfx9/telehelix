@@ -1,4 +1,35 @@
-"use client";
+export const metadata = {
+  title: "TeleHelix | Smart Telemedicine Platform in Kenya",
+  description:
+    "TeleHelix is a modern telemedicine platform connecting patients with licensed doctors across Kenya. Fast, secure online consultations with AI-assisted tools for smarter healthcare decisions.",
+  keywords: [
+    "Telemedicine Kenya",
+    "Online Doctor Kenya",
+    "TeleHelix",
+    "Digital Healthcare",
+    "Virtual Clinic Kenya",
+    "AI-assisted healthcare",
+    "Remote Medical Consultation"
+  ],
+  openGraph: {
+    title: "TeleHelix | Smart Telemedicine Platform in Kenya",
+    description:
+      "Connect with licensed doctors online in Kenya. Fast, secure consultations with AI-assisted healthcare tools.",
+    url: "https://telehelix.co.ke",
+    siteName: "TeleHelix",
+    locale: "en_KE",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "TeleHelix | Smart Telemedicine Platform in Kenya",
+    description:
+      "Fast, secure online consultations with AI-assisted tools for smarter healthcare decisions.",
+  },
+};
+
+
+"use client"; 
 
 import { useState } from "react";
 import Navbar from "../components/Navbar";
